@@ -3,125 +3,107 @@ package com.example.Programmeringsuppgift;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Service;
+import scala.Char;
 
 @Service
 
 public class IsbnService {
 
-/*  long isbn = 1234567894L;*/
+    /*  long isbn = 1234567894L;*/
 
-    public String validateIsbn(long isbn) {
+ /*   String isbn = "123456789X";*/
 
-        int numSize = String.valueOf(isbn).length();
+    public String validateIsbn(String isbn) {
+
+        //Replace x with 10
+        String newISBN = isbn.replace("X", "10");
+
+        int numSize = newISBN.length();
 
         String answer = null;
 
+        int sum = 0;
+
         //ISBN 10
-        if (numSize == 10) {
-            answer = "";
+        if (numSize == 10 || numSize == 11) {
 
-            int[] numArray = new int[numSize];
+            int count = 10;
 
-            // From long to array
-            long temp = isbn;
-            for (int i = numSize - 1; i >= 0; i--) {
+            for (int i = 0; i < numSize; i++) {
 
-                int num = (int) (temp % 10);
-                numArray[i] = num;
+                char c = newISBN.charAt(i);
+                int num = Character.getNumericValue(c);
 
-                temp /= 10;
-            }
+                sum += num * count;
 
-            // New Arraynumbers and sum
-            int arrayPosition = 0;
-            int newArrNum = 0;
-            long sum = 0;
-
-            for (int i = numArray.length; i >= 1; i--) {
-                newArrNum = numArray[arrayPosition] * i;
-                numArray[arrayPosition] = newArrNum;
-
-
-                sum += newArrNum;
-
-                arrayPosition++;
+                // IF X in isbn
+                if (i == 9 && num == 1) {
+                    sum += 9;
+                }
 
                 System.out.println(sum);
+                count--;
             }
+
 
             // Div by 11
             if (sum % 11 == 0) {
-                answer = "isbn number is valid!";
-                System.out.println("isbn number is valid!");
+                answer = "ISBN10 is valid";
+                System.out.println("isbn10 number is valid!");
             } else {
-                System.out.println("isbn number is not valid");
-                answer = "isbn number is not valid";
+                System.out.println("isbn10 number is not valid");
+                answer = "ISBN10  is not valid";
             }
         }
+
+
 
 
         //ISBN 13
         else if (numSize == 13) {
 
+            int count = 13;
 
+            for (int i = 0; i < numSize; i++) {
 
+                char c = newISBN.charAt(i);
+                int num = Character.getNumericValue(c);
 
-            int[] numArray = new int[numSize];
-
-            // From long to array
-            long temp = isbn;
-            for (int i = numSize - 1; i >= 0; i--) {
-
-
-                int num = (int) (temp % 10);
-                numArray[i] = num;
-
-                temp /= 10;
-            }
-
-            // New Arraynumbers and sum
-            int arrayPosition = 0;
-            int newArrNum = 0;
-            long sum = 0;
-
-            for (int i : numArray) {
-
+                //Even number?
                 if (i % 2 == 0) {
-                    newArrNum = numArray[arrayPosition] * 3;
-                    numArray[arrayPosition] = newArrNum;
-                    sum += newArrNum;
-                    arrayPosition++;
-
+                    sum += num * 3;
                     System.out.println(sum);
                 } else {
-                    newArrNum = numArray[arrayPosition] * 1;
-                    numArray[arrayPosition] = newArrNum;
-                    sum += newArrNum;
-                    arrayPosition++;
+                    sum += num * 1;
+                    System.out.println(sum);
                 }
+                count--;
             }
 
             // Div by 10
             if (sum % 10 == 0) {
-                answer = "isbn number is valid!";
-                System.out.println("isbn number is valid!");
+                answer = "ISBN13 is valid!";
+                System.out.println("isbn13 number is valid!");
             } else {
-                System.out.println("isbn number is not valid");
-                answer = "isbn number is not valid";
+                System.out.println("isbn13 number is not valid");
+                answer = "ISBN13 is not valid";
             }
 
-
-
             return answer;
-
         }
+
+
+
+
 
         // Not isbn10 or isbn13
         else{
-            answer = "incorrect number of digits";
+            answer = "the number of digits must be 10 or 13, please try again!";
         }
-        return answer;
 
+
+
+        return answer;
     }
 }
 

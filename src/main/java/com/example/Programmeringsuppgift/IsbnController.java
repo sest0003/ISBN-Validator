@@ -21,12 +21,13 @@ public class IsbnController {
 
     @GetMapping("/")
     public String ShowAnswer(Model model) {
-
+       /* String isbn = "123456789X";
+        service.validateIsbn(isbn);*/
         return "home";
     }
 
-    @PostMapping("/submit")
-    public String sendForm(Model model, @RequestParam long isbn) {
+    @PostMapping("/")
+    public String sendForm(Model model, @RequestParam String isbn) {
 
         String answer;
 

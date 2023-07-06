@@ -8,14 +8,29 @@
 
 
 
-<form action="/" method="post">
+<form action="/" method="post" style="display: flex; justify-content: center;">
     ISBN: <input type="text" name="isbn"/>
-    <input type="submit"/>
+    <input id="skicka" type="submit"/>
 </form>
 
 <div th:if="${answer != null}">
-    <p th:text="${answer}"></p>
+    <p th:text="${answer}" style="display: flex; justify-content: center;"></p>
 </div>
+
+
+<!--Reload on submit-->
+<script>
+
+    document.getElementById("skicka").addEventListener("click", function() {
+  location.reload();
+});
+
+</script>
+
+
+
+
+
 
 
 

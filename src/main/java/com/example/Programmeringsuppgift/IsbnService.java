@@ -98,13 +98,15 @@ public class IsbnService {
 
         // Not isbn10 or isbn13
         else{
-            answer = "the number of digits must be 10 or 13, please try again!";
+            answer = "The amount of digits must be 10 or 13, please try again!";
         }
 
 
 
         return answer;
     }
+
+
 }
 
 
